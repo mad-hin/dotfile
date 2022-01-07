@@ -58,4 +58,4 @@ nnoremap <F5> :NERDTreeToggle<CR>
 " NerdTree UI setting
 let NERDTreeMinimalUI=1
 let NERDTreeChDirMode=2
-let g:NERDTreeHidden=0
+let g:NERDTreeHidden=1
