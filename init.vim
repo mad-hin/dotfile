@@ -15,9 +15,24 @@ Plug 'sainnhe/sonokai'
 " File Explorer
 Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" wilder.nvim
+if has('nvim')
+  function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+  endfunction
+
+  Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+else
+  Plug 'gelguy/wilder.nvim'
+
+  " To use Python remote plugin features in Vim, can be skipped
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 "File Icon (Put it at last)
 Plug 'ryanoasis/vim-devicons'
-
 call plug#end()
 
 " NeoVim Setting
@@ -28,14 +43,10 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+autocmd Syntax nerdtree syntax clear NERDTreeFlags
 
 " Color scheme
-if has('termguicolors')
-    set termguicolors
-endif
-
-let g:sonokai_style = 'atlantis'
-colorscheme sonokai
+colorscheme onedark
 
 """"""""""""
 " Air line "
@@ -59,3 +70,19 @@ nnoremap <F5> :NERDTreeToggle<CR>
 let NERDTreeMinimalUI=1
 let NERDTreeChDirMode=2
 let g:NERDTreeHidden=1
+
+"""""""""""""""
+" wilder.nvim "
+"""""""""""""""
+
+" Key bindings can be changed, see below
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer({
+      \ 'highlighter': wilder#basic_highlighter(),
+      \ 'left': [
+      \   ' ', wilder#popupmenu_devicons(),
+      \ ],
+      \ 'right': [
+      \   ' ', wilder#popupmenu_scrollbar(),
+      \ ],
+      \ }))
