@@ -31,6 +31,8 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+" Github copilot 
+Plug 'github/copilot.vim'
 "File Icon (Put it at last)
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
@@ -43,10 +45,20 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+set clipboard=unnamedplus
 autocmd Syntax nerdtree syntax clear NERDTreeFlags
 
 " Color scheme
-colorscheme onedark
+" colorscheme onedark
+
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+let g:sonokai_style = 'atlantis'
+let g:sonokai_better_performance = 1
+
+colorscheme sonokai
 
 """"""""""""
 " Air line "
@@ -76,7 +88,6 @@ let g:NERDTreeHidden=1
 """""""""""""""
 
 " Key bindings can be changed, see below
-call wilder#setup({'modes': [':', '/', '?']})
 call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \ 'highlighter': wilder#basic_highlighter(),
       \ 'left': [
@@ -86,3 +97,19 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer({
       \   ' ', wilder#popupmenu_scrollbar(),
       \ ],
       \ }))
+
+" Default keys
+call wilder#setup({
+      \ 'modes': [':', '/', '?'],
+      \ 'next_key': '<Tab>',
+      \ 'previous_key': '<S-Tab>',
+      \ 'accept_key': '<Down>',
+      \ 'reject_key': '<Up>',
+      \ })
+
+"""""""""""""""""""""""""
+" vim-sysntax-highlight "
+"""""""""""""""""""""""""
+
+let g:NERDTreeHighlightFolders = 1 " enables folder icon highlighting using exact match
+let g:NERDTreeHighlightFoldersFullName = 1 " highlights the folder name
